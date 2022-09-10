@@ -1,0 +1,26 @@
+body{
+    background-color: orange;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: 900px;
+    grid-template-rows: 300px 300px 300px;
+    grid-template-areas: 
+    "row1"
+    "row2"
+    "row3";
+    justify-content: center;
+}
+.row1,.row2,.row3{
+    display: grid;
+    grid-template-columns: 300px 300px 300px;
+    grid-template-rows: 300px;
+}
+.grid{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 200px;
+    border: 5px solid black;
+}
