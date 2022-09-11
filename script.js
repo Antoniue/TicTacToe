@@ -66,6 +66,10 @@ const gameFlow = (() => {
         )
     });
 
+    function getRandom(max){
+        return Math.floor(Math.random() * max);
+    }
+
     let currentPlayer = () => {
         if(lastPlayer.symbol === 'O')
         {
@@ -102,28 +106,241 @@ const gameFlow = (() => {
         turn.textContent = 'Please choose Game Mode';
     }
 
+    function giveDecision(board){
+        if(board[1][1] == 'X'){
+        if(board[0][0] == 'O' && board[0][2] == 'O' && board[0][1] == '')
+        return [0,1];
+        if(board[0][0] == 'O' && board[2][0] == 'O' && board[1][0] == '')
+        return [1,0];
+        if(board[0][0] == 'O' && board[0][1] == 'O' && board[0][2] == '')
+        return [0,2];
+        if(board[0][1] == 'O' && board[0][2] == 'O' && board[0][0] == '')
+        return [0,0];
+        if(board[2][0] == 'O' && board[2][1] == 'O' && board[2][2] == '')
+        return [2,2];
+        if(board[2][1] == 'O' && board[2][2] == 'O' && board[2][0] == '')
+        return [2,0];
+        if(board[2][0] == 'O' && board[2][2] == 'O' && board[2][1] == '')
+        return [2,1];
+        if(board[2][2] == 'O' && board[0][2] == 'O' && board[1][2] == '')
+        return [1,2];
+        if(board[2][2] == 'O' && board[1][2] == 'O' && board[0][2] == '')
+        return [0,2];
+        if(board[2][0] == 'O' && board[1][0] == 'O' && board[0][0] == '')
+        return [0,0];
+        if(board[0][0] == 'O' && board[1][0] == 'O' && board[2][0] == '')
+        return [2,0];
+        if(board[0][2] == 'O' && board[1][2] == 'O' && board[2][0] == '')
+        return [2,0];
+
+        let random = getRandom(4);
+        if(currentTurns == 1)
+        {
+        if(random == 0)
+        {
+            if(board[0][0] == '')
+            return [0,0];
+        }
+        if(random == 1)
+        {
+            if(board[0][2] == '')
+            return [0,2];
+        }
+        if(random == 2)
+        {
+            if(board[2][0] == '')
+            return [2,0];
+        }
+        if(random == 3)
+        {
+            if(board[2][2] == '')
+            return [2,2];
+        }
+        }
+        if(
+            (board[0][0] == 'X' && board[1][0] == 'X') ||
+            (board[0][2] == 'X' && board[1][1] == 'X') ||
+            (board[2][1] == 'X' && board[2][2] == 'X'))
+            if(board[2][0] == '')
+        return [2 , 0];
+        if(
+            (board[0][1] == 'X' && board[1][1] == 'X') ||
+            (board[2][0] == 'X' && board[2][2] == 'X'))
+            if(board[2][1] == '')
+        return [2 , 1];
+        if(
+            (board[0][2] == 'X' && board[1][2] == 'X') ||
+            (board[0][0] == 'X' && board[1][1] == 'X') ||
+            (board[2][0] == 'X' && board[2][1] == 'X'))
+            if(board[2][2] == '')
+        return [2 , 2];
+        if(
+            (board[1][0] == 'X' && board[2][0] == 'X') ||
+            (board[1][1] == 'X' && board[2][2] == 'X') ||
+            (board[0][1] == 'X' && board[0][2] == 'X'))
+            if(board[0][0] == '')
+        return [0 , 0];
+        if(
+            (board[1][1] == 'X' && board[2][1] == 'X') ||
+            (board[0][0] == 'X' && board[0][2] == 'X'))
+            if(board[0][1] == '')
+        return [0 , 1];
+        if(
+            (board[1][2] == 'X' && board[2][2] == 'X') ||
+            (board[1][1] == 'X' && board[2][0] == 'X') ||
+            (board[0][0] == 'X' && board[0][1] == 'X'))
+            if(board[0][2] == '')
+        return [0 , 2];
+        if(
+            (board[1][0] == 'X' && board[1][1] == 'X') ||
+            (board[0][2] == 'X' && board[2][2] == 'X'))
+            if(board[1][2] == '')
+        return [1 , 2];
+        if(
+            (board[0][0] == 'X' && board[2][0] == 'X') ||
+            (board[1][1] == 'X' && board[1][2] == 'X'))
+            if(board[1][0] == '')
+        return [1 , 0];
+        }
+        else
+        {
+            if(board[1][1] != 'O')
+            return [1,1];
+
+            if(
+                ((board[0][0] == 'O' && board[0][2] == 'O')
+                || (board[2][1] == 'O' && board[1][1] == 'O'))
+                && board[0][1] == '')
+            return [0,1];
+            if(
+                ((board[0][0] == 'O' && board[2][0] == 'O')
+                || (board[1][1] == 'O' && board[1][2] == 'O'))
+                && board[1][0] == '')
+            return [1,0];
+            if(
+                ((board[0][0] == 'O' && board[0][1] == 'O')
+                || (board[2][0] == 'O' && board[1][1] == 'O'))
+                && board[0][2] == '')
+            return [0,2];
+            if(board[0][1] == 'O' && board[0][2] == 'O' && board[0][0] == '')
+            return [0,0];
+            if(
+                ((board[2][0] == 'O' && board[2][1] == 'O')
+                || (board[0][0] == 'O' && board[1][1] == 'O'))
+                && board[2][2] == '')
+            return [2,2];
+            if(board[2][1] == 'O' && board[2][2] == 'O' && board[2][0] == '')
+            return [2,0];
+            if(
+                ((board[2][0] == 'O' && board[2][2] == 'O')
+                || (board[0][1] == 'O' && board[1][1] == 'O'))
+                && board[2][1] == '')
+            return [2,1];
+            if(
+                ((board[2][2] == 'O' && board[0][2] == 'O')
+                || (board[1][0] == 'O' && board[1][1] == 'O'))
+                && board[1][2] == '')
+            return [1,2];
+            if(board[2][2] == 'O' && board[1][2] == 'O' && board[0][2] == '')
+            return [0,2];
+            if(
+                ((board[2][0] == 'O' && board[1][0] == 'O')
+                || (board[2][2] == 'O' && board[1][1] == 'O'))
+                && board[0][0] == '')
+            return [0,0];
+            if(board[0][0] == 'O' && board[1][0] == 'O' && board[2][0] == '')
+            return [2,0];
+            if(
+                ((board[0][2] == 'O' && board[1][2] == 'O')
+                || (board[0][2] == 'O' && board[1][1] == 'O'))
+                 && board[2][0] == '')
+            return [2,0];
+
+            
+            let random = getRandom(4);
+            if(currentTurns == 1)
+            {
+            if(random == 0)
+            {
+                if(board[0][0] == '')
+                return [0,0];
+            }
+            if(random == 1)
+            {
+                if(board[0][2] == '')
+                return [0,2];
+            }
+            if(random == 2)
+            {
+                if(board[2][0] == '')
+                return [2,0];
+            }
+            if(random == 3)
+            {
+                if(board[2][2] == '')
+                return [2,2];
+            }
+            }
+            if(
+                (board[0][0] == 'X' && board[1][0] == 'X') ||
+                (board[0][2] == 'X' && board[1][1] == 'X') ||
+                (board[2][1] == 'X' && board[2][2] == 'X'))
+                if(board[2][0] == '')
+            return [2 , 0];
+            if(
+                (board[0][1] == 'X' && board[1][1] == 'X') ||
+                (board[2][0] == 'X' && board[2][2] == 'X'))
+                if(board[2][1] == '')
+            return [2 , 1];
+            if(
+                (board[0][2] == 'X' && board[1][2] == 'X') ||
+                (board[0][0] == 'X' && board[1][1] == 'X') ||
+                (board[2][0] == 'X' && board[2][1] == 'X'))
+                if(board[2][2] == '')
+            return [2 , 2];
+            if(
+                (board[1][0] == 'X' && board[2][0] == 'X') ||
+                (board[1][1] == 'X' && board[2][2] == 'X') ||
+                (board[0][1] == 'X' && board[0][2] == 'X'))
+                if(board[0][0] == '')
+            return [0 , 0];
+            if(
+                (board[1][1] == 'X' && board[2][1] == 'X') ||
+                (board[0][0] == 'X' && board[0][2] == 'X'))
+                if(board[0][1] == '')
+            return [0 , 1];
+            if(
+                (board[1][2] == 'X' && board[2][2] == 'X') ||
+                (board[1][1] == 'X' && board[2][0] == 'X') ||
+                (board[0][0] == 'X' && board[0][1] == 'X'))
+                if(board[0][2] == '')
+            return [0 , 2];
+            if(
+                (board[1][0] == 'X' && board[1][1] == 'X') ||
+                (board[0][2] == 'X' && board[2][2] == 'X'))
+                if(board[1][2] == '')
+            return [1 , 2];
+            if(
+                (board[0][0] == 'X' && board[2][0] == 'X') ||
+                (board[1][1] == 'X' && board[1][2] == 'X'))
+                if(board[1][0] == '')
+            return [1 , 0];
+        }
+        let temp1 = getRandom(3);
+        let temp2 = getRandom(3);
+        while(board[temp1][temp2] != '')
+        {
+            temp1 = getRandom(3);
+            temp2 = getRandom(3);
+        }
+        return[temp1 , temp2];
+    }
+
     const playAI = () => {
         currentPlayer = PlayerX;
-        function getRandom(){
-            return Math.floor(Math.random() * 3);
-        }
-        if(board[1][1] === '')
-        {
-            board[1][1] = 'O';
-            currentTurns++;
-        }
-        else if (board[1][1] === 'X')
-        {
-            let temp1 = getRandom();
-            let temp2 = getRandom();
-            while(board[temp1][temp2] != '')
-            {
-                temp1 = getRandom();
-                temp2 = getRandom();
-            }
-            board[temp1][temp2] = 'O';
-            currentTurns++;
-        }
+        let decisions = giveDecision(board);
+        board[decisions[0]][decisions[1]] = 'O';
+        currentTurns++;
         render();
         checkWin();
     }
