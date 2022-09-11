@@ -1,4 +1,5 @@
 let result = document.querySelector('.result');
+let currentTurns = 0;
 // factory function for players
 const playerFactory = (symbol) => {
     this.symbol = symbol;
@@ -10,23 +11,34 @@ const gameBoard = (() => {
     let row1board = ['','',''];
     let row2board = ['','',''];
     let row3board = ['','',''];
+    let isFinished = false;
     const getBoard = () => {
         return [row1board,row2board,row3board];
+    }
+
+    const setFinish = (finish) => {
+        isFinished = finish;
+    }
+
+    const getFinish = () => {
+        return isFinished;
     }
 
     const restartBoard = () => {
         row1board = ['','',''];
         row2board = ['','',''];
         row3board = ['','',''];
+        setFinish(false);
         gameFlow.render();
         result.innerHTML = '';
+        currentTurns = 0;
     }
     const butt = document.querySelector('.restartButton');
     butt.addEventListener(
         'click', 
         () => restartBoard()
 );
-    return {getBoard};
+    return {getBoard, setFinish, getFinish};
 }
 )();
 
@@ -40,7 +52,6 @@ const gameFlow = (() => {
     let PlayerO = playerFactory('O');
     let PlayerX = playerFactory('X');
     let lastPlayer = playerFactory('O');
-    let currentTurns = 0;
     let currentPlayer = () => {
         if(lastPlayer.symbol === 'O')
         {
@@ -78,10 +89,13 @@ const gameFlow = (() => {
                 'click',
                 () => {
                     let gridid = grids.getAttribute('id');
+                    if(gameBoard.getFinish() === false)
+                    {
                     if(board[gridid[4]][gridid[5]] == '')
                         board[gridid[4]][gridid[5]] = currentPlayer().symbol;
                     render();
                     checkWin();
+                    }
                 }
             )
         });
@@ -102,6 +116,7 @@ const gameFlow = (() => {
             )
             {
                 result.innerHTML = 'Player X has won!'
+                gameBoard.setFinish(true);
             }
             else if(
                 (board[0][0] === 'O' && board[1][0] === 'O' && board[2][0] === 'O') //row left side
@@ -115,6 +130,7 @@ const gameFlow = (() => {
             )
             {
                 result.innerHTML = 'Player O has won!'
+                gameBoard.setFinish(true);
             }
             else if (currentTurns == 9)
                 result.innerHTML = "it's a fucking tie!";
