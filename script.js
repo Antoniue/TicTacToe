@@ -22,7 +22,7 @@ const gameBoard = (() => {
     const butt = document.querySelector('.restartButton');
     butt.addEventListener(
         'click', 
-        () => {restartBoard(); console.log('restart');}
+        () => restartBoard()
 );
     return {getBoard};
 }
@@ -33,8 +33,25 @@ const gameFlow = (() => {
     let row1 = document.querySelector('.row1');
     let row2 = document.querySelector('.row2');
     let row3 = document.querySelector('.row3');
-    const player1 = playerFactory('X');
-    const player2 = playerFactory('O');
+    let turn = document.querySelector('.turn');
+    let PlayerO = playerFactory('O');
+    let PlayerX = playerFactory('X');
+    let lastPlayer = playerFactory('O');
+    let currentPlayer = () => {
+        if(lastPlayer.symbol === 'O')
+        {
+            lastPlayer = PlayerX;
+            turn.textContent = "Player "+PlayerO.symbol+"'s turn";
+            return PlayerX;
+        }
+        if(lastPlayer.symbol === 'X')
+        {
+            lastPlayer = PlayerO;
+            turn.textContent = "Player "+PlayerX.symbol+"'s turn";
+            return PlayerO;
+        }
+    }
+
     const render = () => {
         board = gameBoard.getBoard();
         row1.innerHTML = '';
@@ -55,7 +72,7 @@ const gameFlow = (() => {
                 'click',
                 () => {
                     let gridid = grids.getAttribute('id');
-                    board[gridid[4]][gridid[5]] = player2.symbol;
+                    board[gridid[4]][gridid[5]] = currentPlayer().symbol;
                     render();
                 }
             )
