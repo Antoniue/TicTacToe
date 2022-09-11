@@ -10,7 +10,7 @@ body{
 
 
 .restartButton{
-    margin-top: 50px;
+    margin-top: 20px;
     background-color: rgb(3, 121, 121);
     color: white;
     border-radius: 20px;
@@ -21,22 +21,22 @@ body{
 
 
 .result{
-    font-size: 60px;
+    font-size: 40px;
     margin-bottom: 100px;
     font-weight: bolder;
 }
 
 
 .turn{
-    font-size: 50px;
+    font-size: 30px;
     font-weight: bolder;
 }
 
 
 .board{
     display: grid;
-    grid-template-columns: 900px;
-    grid-template-rows: 300px 300px 300px;
+    grid-template-columns: 600px;
+    grid-template-rows: 200px 200px 200px;
     grid-template-areas: 
     "row1"
     "row2"
@@ -46,8 +46,8 @@ body{
 }
 .row1,.row2,.row3{
     display: grid;
-    grid-template-columns: 300px 300px 300px;
-    grid-template-rows: 300px;
+    grid-template-columns: 200px 200px 200px;
+    grid-template-rows: 200px;
 }
 .grid{
     display: flex;
