@@ -141,7 +141,8 @@ const gameFlow = (() => {
                         currentTurns++;
                         render();
                         checkWin();
-                        playAI();
+                        if(currentTurns != 9)
+                            playAI();
                     }
                 }
             )
