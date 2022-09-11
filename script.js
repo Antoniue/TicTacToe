@@ -72,7 +72,8 @@ const gameFlow = (() => {
                 'click',
                 () => {
                     let gridid = grids.getAttribute('id');
-                    board[gridid[4]][gridid[5]] = currentPlayer().symbol;
+                    if(board[gridid[4]][gridid[5]] == '')
+                        board[gridid[4]][gridid[5]] = currentPlayer().symbol;
                     render();
                 }
             )
