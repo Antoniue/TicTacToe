@@ -206,7 +206,6 @@ const gameFlow = (() => {
         {
             if(board[1][1] != 'O')
             return [1,1];
-
             if(
                 ((board[0][0] == 'O' && board[0][2] == 'O')
                 || (board[2][1] == 'O' && board[1][1] == 'O'))
@@ -256,9 +255,9 @@ const gameFlow = (() => {
                  && board[2][0] == '')
             return [2,0];
 
-            
+
             let random = getRandom(4);
-            if(currentTurns == 1)
+            if(currentTurns == 3)
             {
             if(random == 0)
             {
