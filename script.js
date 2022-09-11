@@ -44,6 +44,7 @@ const gameBoard = (() => {
 
 // gameFlow module
 const gameFlow = (() => {
+    let gameType = '';
     let result = document.querySelector('.result');
     let row1 = document.querySelector('.row1');
     let row2 = document.querySelector('.row2');
@@ -52,6 +53,19 @@ const gameFlow = (() => {
     let PlayerO = playerFactory('O');
     let PlayerX = playerFactory('X');
     let lastPlayer = playerFactory('O');
+
+    let gameButton = document.querySelectorAll('.play');
+    gameButton.forEach(gameButton => {
+        gameButton.addEventListener(
+            'click',
+            () => {
+                gameType = gameButton.getAttribute('id');
+                render();
+                turn.textContent = "Player "+PlayerX.symbol+"'s turn";
+            }
+        )
+    });
+
     let currentPlayer = () => {
         if(lastPlayer.symbol === 'O')
         {
@@ -80,9 +94,61 @@ const gameFlow = (() => {
             row2.innerHTML += '<div class="grid" id="grid1'+(index)+'">'+board[1][index]+'</div>'
             row3.innerHTML += '<div class="grid" id="grid2'+(index)+'">'+board[2][index]+'</div>'
         }
-        drawBoard();
+        if(gameType === 'players')
+        drawBoardPlayers();
+        else if (gameType === 'playerAI')
+        drawBoardAI();
+        else
+        turn.textContent = 'Please choose Game Mode';
     }
-    const drawBoard = () => {
+
+    const playAI = () => {
+        currentPlayer = PlayerX;
+        function getRandom(){
+            return Math.floor(Math.random() * 3);
+        }
+        if(board[1][1] === '')
+        {
+            board[1][1] = 'O';
+            currentTurns++;
+        }
+        else if (board[1][1] === 'X')
+        {
+            let temp1 = getRandom();
+            let temp2 = getRandom();
+            while(board[temp1][temp2] != '')
+            {
+                temp1 = getRandom();
+                temp2 = getRandom();
+            }
+            board[temp1][temp2] = 'O';
+            currentTurns++;
+        }
+        render();
+        checkWin();
+    }
+
+    const drawBoardAI = () => {
+        const grids = document.querySelectorAll('.grid');
+        grids.forEach(grids => {
+            grids.addEventListener(
+                'click',
+                () => {
+                    let gridid = grids.getAttribute('id');
+                    if(gameBoard.getFinish() === false)
+                        if(board[gridid[4]][gridid[5]] == ''){
+                        board[gridid[4]][gridid[5]] = 'X';
+                        currentTurns++;
+                        render();
+                        checkWin();
+                        playAI();
+                    }
+                }
+            )
+        });
+    }
+
+    const drawBoardPlayers = () => {
         const grids = document.querySelectorAll('.grid');
         grids.forEach(grids => {
             grids.addEventListener(
@@ -133,7 +199,10 @@ const gameFlow = (() => {
                 gameBoard.setFinish(true);
             }
             else if (currentTurns == 9)
+            {
                 result.innerHTML = "it's a fucking tie!";
+                gameBoard.setFinish(true);
+            }
         }
     }
     return {render};
