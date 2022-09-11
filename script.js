@@ -45,7 +45,6 @@ const gameBoard = (() => {
 // gameFlow module
 const gameFlow = (() => {
     let gameType = '';
-    let result = document.querySelector('.result');
     let row1 = document.querySelector('.row1');
     let row2 = document.querySelector('.row2');
     let row3 = document.querySelector('.row3');
@@ -107,7 +106,9 @@ const gameFlow = (() => {
     }
 
     function giveDecision(board){
+        //checks if player has started in center
         if(board[1][1] == 'X'){
+        //checks if it can fill any grid to win
         if(board[0][0] == 'O' && board[0][2] == 'O' && board[0][1] == '')
         return [0,1];
         if(board[0][0] == 'O' && board[2][0] == 'O' && board[1][0] == '')
@@ -133,30 +134,21 @@ const gameFlow = (() => {
         if(board[0][2] == 'O' && board[1][2] == 'O' && board[2][0] == '')
         return [2,0];
 
+        //checks if it can take any edge of the 4 edges as it's first grid (2nd best grids to fill after center)
         let random = getRandom(4);
         if(currentTurns == 1)
         {
         if(random == 0)
-        {
-            if(board[0][0] == '')
             return [0,0];
-        }
         if(random == 1)
-        {
-            if(board[0][2] == '')
             return [0,2];
-        }
         if(random == 2)
-        {
-            if(board[2][0] == '')
             return [2,0];
-        }
         if(random == 3)
-        {
-            if(board[2][2] == '')
             return [2,2];
         }
-        }
+
+        //checks if player has 2 grids in a row so it can block it
         if(
             (board[0][0] == 'X' && board[1][0] == 'X') ||
             (board[0][2] == 'X' && board[1][1] == 'X') ||
@@ -202,10 +194,15 @@ const gameFlow = (() => {
             if(board[1][0] == '')
         return [1 , 0];
         }
+        
+        //engages this else if player didn't put center as first grid
         else
         {
+            //if center is not computer, place first computer grid as center
             if(board[1][1] != 'O')
             return [1,1];
+
+             //checks if it can fill any grid to win
             if(
                 ((board[0][0] == 'O' && board[0][2] == 'O')
                 || (board[2][1] == 'O' && board[1][1] == 'O'))
@@ -255,31 +252,7 @@ const gameFlow = (() => {
                  && board[2][0] == '')
             return [2,0];
 
-
-            // let random = getRandom(4);
-            // if(currentTurns == 3)
-            // {
-            // if(random == 0)
-            // {
-            //     if(board[0][0] == '')
-            //     return [0,0];
-            // }
-            // if(random == 1)
-            // {
-            //     if(board[0][2] == '')
-            //     return [0,2];
-            // }
-            // if(random == 2)
-            // {
-            //     if(board[2][0] == '')
-            //     return [2,0];
-            // }
-            // if(random == 3)
-            // {
-            //     if(board[2][2] == '')
-            //     return [2,2];
-            // }
-            // }
+            //checks if player has 2 grids in a row so it can block it
             if(
                 (board[0][0] == 'X' && board[1][0] == 'X') ||
                 (board[0][2] == 'X' && board[1][1] == 'X') ||
@@ -325,6 +298,8 @@ const gameFlow = (() => {
                 if(board[1][0] == '')
             return [1 , 0];
         }
+
+        //incase nothing above gets engaged
         let temp1 = getRandom(3);
         let temp2 = getRandom(3);
         while(board[temp1][temp2] != '')
@@ -376,6 +351,7 @@ const gameFlow = (() => {
                     {
                     if(board[gridid[4]][gridid[5]] == '')
                         board[gridid[4]][gridid[5]] = currentPlayer().symbol;
+                    currentPlayer;
                     render();
                     checkWin();
                     }
