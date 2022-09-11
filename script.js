@@ -256,30 +256,30 @@ const gameFlow = (() => {
             return [2,0];
 
 
-            let random = getRandom(4);
-            if(currentTurns == 3)
-            {
-            if(random == 0)
-            {
-                if(board[0][0] == '')
-                return [0,0];
-            }
-            if(random == 1)
-            {
-                if(board[0][2] == '')
-                return [0,2];
-            }
-            if(random == 2)
-            {
-                if(board[2][0] == '')
-                return [2,0];
-            }
-            if(random == 3)
-            {
-                if(board[2][2] == '')
-                return [2,2];
-            }
-            }
+            // let random = getRandom(4);
+            // if(currentTurns == 3)
+            // {
+            // if(random == 0)
+            // {
+            //     if(board[0][0] == '')
+            //     return [0,0];
+            // }
+            // if(random == 1)
+            // {
+            //     if(board[0][2] == '')
+            //     return [0,2];
+            // }
+            // if(random == 2)
+            // {
+            //     if(board[2][0] == '')
+            //     return [2,0];
+            // }
+            // if(random == 3)
+            // {
+            //     if(board[2][2] == '')
+            //     return [2,2];
+            // }
+            // }
             if(
                 (board[0][0] == 'X' && board[1][0] == 'X') ||
                 (board[0][2] == 'X' && board[1][1] == 'X') ||
